@@ -1,0 +1,14 @@
+.profile__add-image {
+    width: 22px;
+    height: 22px;
+    margin: 14px 64px 14px 64px;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 642px) {
+    .profile__add-image {
+        width: 16px;
+        height: 16px;
+        margin: 14px 132px 14px 132px;
+    }
+  }
