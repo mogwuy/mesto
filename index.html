@@ -19,8 +19,8 @@
       <section class="profile">
           <div class="profile__avatar"></div>
           <div class="profile__info">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
-            <p class="profile__subtitle">Исследователь океана</p>
+            <h1 class="profile__title" id="profileName">Жак-Ив Кусто</h1>
+            <p class="profile__subtitle" id="profileSubname">Исследователь океана</p>
           </div>
           <div class="profile__edit-button">
             <a href="#" class="profile__edit-link"><img class="profile__edit-image" src="/images/profile_edit.svg" alt="Редактировать профиль"></a>
@@ -65,18 +65,19 @@
     <p class="footer__copyright">© 2021 Mesto Russia</p>
   </footer>
   </main>
-  <section class="popup popup_opened">
+  <section class="popup">
     <div class="popup__content">
       <a href="#" class="popup__close-link"><img class="popup__close" src="/images/add_button.svg" alt="Закрыть"></a>
       <div class="popup__container">
         <h2 class="popup__title">Редактировать Профиль</h2>
-        <input type="text" placeholder="Имя" class="popup__input">
-        <input type="text" placeholder="Подпись" class="popup__input">
+        <input type="text" placeholder="Жак-Ив Кусто" id= "name" class="popup__input">
+        <input type="text" placeholder="Исследователь океана" id= "subname" class="popup__input">
         <div class="popup__submit">
           <a href="#" class="popup__submit-link"><p class="popup__submit-text" >Сохранить</p></a>
         </div>
       </div>
     </div>
   </section>
+  <script src="/scripts/script.js"></script>
 </body>
 </html>
