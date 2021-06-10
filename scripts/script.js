@@ -12,16 +12,16 @@ function popupClose() {
 }
 
 let formElement = document.querySelector('.popup__submit');
-let nameInput = document.querySelector('name');
-let jobInput = document.querySelector('subname');
+let nameInput = document.querySelector('#name');
+let jobInput = document.querySelector('#subname');
 
 
 function formSubmitHandler (evt) {
   evt.preventDefault(); 
-  let nameInput = document.getElementById('name').value;
-  let jobInput = document.getElementById('subname').value;
-  document.getElementById('profileName').textContent = nameInput;
-  document.getElementById('profileSubname').textContent = jobInput;
+  let nameInput = document.querySelector('#name').value;
+  let jobInput = document.querySelector('#subname').value;
+  document.querySelector('#profileName').textContent = nameInput;
+  document.querySelector('#profileSubname').textContent = jobInput;
 
 }
 
