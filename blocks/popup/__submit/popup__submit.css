@@ -3,4 +3,12 @@
   height: 50px;
   background: #000000;
   border-radius: 2px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 15px 0;
 }
