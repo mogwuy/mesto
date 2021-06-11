@@ -1,12 +1,14 @@
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close');
 let popup = document.querySelector('.popup');
-let nameProfile = document.querySelector('#profileName').textContent;
-let subnameProfile =  document.querySelector('#profileSubname').textContent;
+
 
 
 function popupOpen() {
   popup.classList.add('popup_opened');
+
+  let nameProfile = document.querySelector('#profileName').textContent;
+  let subnameProfile =  document.querySelector('#profileSubname').textContent;
   document.querySelector('#name').value = nameProfile;
   document.querySelector('#subname').value = subnameProfile;
 }
