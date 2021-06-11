@@ -7,6 +7,8 @@
   margin-left: auto;
   margin-top: 41px;
   transition: opacity .2s ease-out;
+  background-color: transparent;
+  padding:0;
 }
 
 .profile__add-button:hover {

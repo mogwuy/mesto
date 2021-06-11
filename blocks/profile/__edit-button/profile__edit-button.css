@@ -6,6 +6,8 @@
   box-sizing: border-box;
   align-content: flex-start;
   transition: opacity .2s ease-out;
+  background-color: transparent;
+  padding:0;
 }
 
 .profile__edit-button:hover {
