@@ -7,11 +7,13 @@
   margin-left: auto;
   margin-top: 41px;
   transition: opacity .2s ease-out;
+  background-color: transparent;
+  padding:0;
 }
 
 .profile__add-button:hover {
     opacity: 0.6;
-    cursor: pointer
+    cursor: pointer;
     }
 
 @media screen and (max-width: 642px) {
