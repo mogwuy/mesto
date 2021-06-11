@@ -5,7 +5,13 @@
   border: 1px solid #FFFFFF;
   box-sizing: border-box;
   align-content: flex-start;
+  transition: opacity .2s ease-out;
 }
+
+.profile__edit-button:hover {
+    opacity: 0.6;
+    cursor: pointer
+    }
 
 @media screen and (max-width: 641px) {
     .profile__edit-button {
@@ -13,7 +19,7 @@
       height: 18px;
       margin: 0;
       position: absolute;
-      top: 163px;
-      right: 29px;
+      top: 162px;
+      right: 38px;
     }
   }

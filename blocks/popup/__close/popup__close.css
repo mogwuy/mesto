@@ -7,4 +7,17 @@
   position: absolute;
   top: 0px;
   right: 0px;
+  transition: opacity .2s ease-out;
+}
+
+.popup__close:hover {
+    opacity: 0.6;
+    cursor: pointer
+    }
+
+@media screen and (max-width: 642px) {
+    .popup__close {
+        width: 26px;
+        height: 26px;
+    }
 }
