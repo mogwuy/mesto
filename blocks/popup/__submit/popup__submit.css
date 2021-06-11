@@ -11,4 +11,10 @@
   text-align: center;
   color: #FFFFFF;
   margin: 15px 0;
+  transition: opacity .2s ease-out;
 }
+
+.popup__submit:hover {
+    opacity: 0.8;
+    cursor: pointer
+    }
