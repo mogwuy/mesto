@@ -6,10 +6,16 @@
   margin-top: 2px;
 }
 
+@media screen and (max-width: 920px) {
+  .element {
+    margin: 0 auto 0;
+  }
+}
+
+
 @media screen and (max-width: 642px) {
     .element {
         margin: 2px auto 0;
     }
   }
 
-  
