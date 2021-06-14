@@ -4,9 +4,6 @@
   background-image: url(../../../images/add_button.svg);
   transform: rotate(45deg);
   background-size: cover;
-  position: absolute;
-  top: 0px;
-  right: 0px;
   transition: opacity .2s ease-out;
 }
 
