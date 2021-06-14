@@ -1,0 +1,16 @@
+.popup__button {
+    border: 0;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.0);
+    position: absolute;
+    top: 0px;
+    /* Не понятно как без отрицательного значения вытолкнуть кнопку закрытия, так что бы не смещался с центра сам попап */
+    right: -38px; 
+}
+
+@media screen and (max-width: 642px) {
+    .popup__button {
+        top: 0px;
+        right: 2px;
+    }
+}
