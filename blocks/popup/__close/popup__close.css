@@ -1,7 +1,6 @@
 .popup__close {
   width: 40.7px;
   height: 40.7px;
-  background-image: url(../../../images/add_button.svg);
   transform: rotate(45deg);
   background-size: cover;
   transition: opacity .2s ease-out;
