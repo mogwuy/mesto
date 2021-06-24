@@ -1,0 +1,11 @@
+.element__trash {
+    width: 18px;
+    height: 19px;
+    background-size: cover;
+    transition: opacity .2s ease-out;
+  }
+  
+  .element__trash:hover {
+      opacity: 0.6;
+      cursor: pointer;
+      }
