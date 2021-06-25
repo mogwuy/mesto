@@ -1,10 +1,10 @@
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupEdit = document.querySelector('#popupedit');
-const popupAdd = document.querySelector('#popupadd');
-const popupImage = document.querySelector('#popupimage');
-const formElementEdit = document.querySelector('#formedit');
-const formElementAdd = document.querySelector('#formadd');
+const popupEdit = document.querySelector('#popup-edit');
+const popupAdd = document.querySelector('#popup-add');
+const popupImage = document.querySelector('#popup-image');
+const formElementEdit = document.querySelector('#form-edit');
+const formElementAdd = document.querySelector('#form-add');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#subname');
 const mestoInput = document.querySelector('#mestoname');
@@ -46,6 +46,7 @@ const cards = document.querySelector('.elements');
 function createCard(cardImage, cardText) {
   const cardElement  = elementTemplate.querySelector('.element').cloneNode(true); 
   cardElement.querySelector('.element__image').src = cardImage;
+  cardElement.querySelector('.element__image').alt = cardText;
   cardElement.querySelector('.element__title').textContent = cardText;
   setLickeClickHandler(cardElement);
   setOpenImagePopupHandler(cardElement);
@@ -69,9 +70,9 @@ function setLickeClickHandler(item) {
 }
 
 //Открытие попапов
-function openPopup(popupitem) {
-  popupitem.classList.add('popup_opened');
-  popupitem.classList.remove('popup_closed');
+function openPopup(popupItem) {
+  popupItem.classList.add('popup_opened');
+  popupItem.classList.remove('popup_closed');
 }
 
 // Функция обновления данных в попапе Edit
@@ -98,19 +99,19 @@ addButton.addEventListener('click', () => {
 });
 
 //Кнопка Закрытия
-document.querySelectorAll('.popup__button').forEach(function(item) {
-item.addEventListener('click', () => {
-  closePopup(popupAdd);
-  closePopup(popupEdit);
-  closePopup(popupImage);
-});
-});
+document.querySelectorAll('.popup__button').forEach(function(button) {
+  const popup = button.closest('.popup')
+   button.addEventListener('click', () => {
+     closePopup(popup);
+   });
+ });
 
 //Popup Image
 function setOpenImagePopupHandler(item) {
-  item.querySelector('#openimage').addEventListener('click', function (evt) {
+  item.querySelector('#open-image').addEventListener('click', function (evt) {
     openPopup(popupImage);
       document.querySelector('.popup__image').src = item.querySelector('.element__image').src;
+      document.querySelector('.popup__image').alt = item.querySelector('.element__image').alt;
       document.querySelector('.popup__text').textContent = item.querySelector('.element__title').textContent;
   });
 }
