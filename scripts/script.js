@@ -98,7 +98,7 @@ addButton.addEventListener('click', () => {
 });
 
 //Кнопка Закрытия
-document.querySelectorAll('#close').forEach(function(item) {
+document.querySelectorAll('.popup__button').forEach(function(item) {
 item.addEventListener('click', () => {
   closePopup(popupAdd);
   closePopup(popupEdit);
