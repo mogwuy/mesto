@@ -38,12 +38,12 @@
   </footer>
   </main>
 
-  <section class="popup popup_closed" id="popupedit">
+  <section class="popup popup_closed" id="popup-edit">
     <div class="popup__window">
-      <button class="popup__button" type="button" id="closebuttonedit"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
+      <button class="popup__button" type="button" id="close-button-edit"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
       <div class="popup__content">
         <h2 class="popup__title">Редактировать Профиль</h2>
-        <form class="popup__container" name="popupform" id="formedit">
+        <form class="popup__container" name="popupform" id="form-edit">
           <input type="text" placeholder="Имя" id= "name" class="popup__input" name="inputpopup">
           <input type="text" placeholder="О себе" id= "subname" class="popup__input" name="inputpopup">
           <input type="submit" class="popup__submit" id="submitedit" value="Сохранить">
@@ -51,12 +51,12 @@
       </div>
     </div>
   </section>
-  <section class="popup popup_closed" id="popupadd">
+  <section class="popup popup_closed" id="popup-add">
     <div class="popup__window">
-      <button class="popup__button" type="button" id="closebuttonadd"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
+      <button class="popup__button" type="button" id="close-button-add"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
       <div class="popup__content">
         <h2 class="popup__title">Новое Место</h2>
-        <form class="popup__container" name="popupform" id="formadd">
+        <form class="popup__container" name="popupform" id="form-add">
           <input type="text" placeholder="Название" id= "mestoname" class="popup__input" name="inputpopup">
           <input type="text" placeholder="Ссылка на картинку" id= "mestosrc" class="popup__input" name="inputpopup">
           <input type="submit" class="popup__submit" id="submitadd" value="Создать">
@@ -64,17 +64,17 @@
       </div>
     </div>
   </section>
-  <section class="popup popup_closed" id="popupimage">
+  <section class="popup popup_closed" id="popup-image">
     <div class="popup__window">
-      <button class="popup__button popup__button-image" type="button" id="closebuttonimage"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
+      <button class="popup__button popup__button-image" type="button" id="close-button-image"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
         <img class="popup__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение">
         <p class="popup__text"></p>
     </div>
   </section>
   <template id="elementcard">
     <div class="element">
-      <button class="popup__imgbutton" type="button" id="openimage"><img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение"></button>
-      <button class="element__trashbutton" type="button" id="removeimage"><img class="element__trash" src="images/trash.svg" alt="Удалить изображение"></button>
+      <button class="popup__imgbutton" type="button" id="open-image"><img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение"></button>
+      <button class="element__trashbutton" type="button" id="remove-image"><img class="element__trash" src="images/trash.svg" alt="Удалить изображение"></button>
       <div class="element__string">
         <h2 class="element__title">Карачаевск</h2>
         <button type="button" class="element__like"></button>   
