@@ -11,6 +11,9 @@ const mestoInput = document.querySelector('#mestoname');
 const scrInput = document.querySelector('#mestosrc');
 const nameProfile = document.querySelector('#profileName')
 const subnameProfile =  document.querySelector('#profileSubname')
+const popupButton = document.querySelectorAll('.popup__button');
+const popupClass = document.querySelectorAll('.popup');
+const popupContainer = document.querySelector('.popup__container');
 const initialCards = [
   {
     name: 'Архыз',
@@ -98,13 +101,36 @@ addButton.addEventListener('click', () => {
   openPopup(popupAdd);
 });
 
-//Кнопка Закрытия
-document.querySelectorAll('.popup__button').forEach(function(button) {
-  const popup = button.closest('.popup')
-   button.addEventListener('click', () => {
-     closePopup(popup);
+//Слушатель закрытия Попапа
+function popupHandler(popupElement) {
+  popupElement.forEach(function(button) {
+    const popup = button.closest('.popup');
+     button.addEventListener('click', () => {
+       closePopup(popup);
+     });
    });
- });
+}
+
+
+//Кнопка Закрытия
+popupHandler(popupButton);
+//Закрытие по оверлею
+Сделать!
+
+
+
+//popupHandler(popupClass);
+
+ //Закрытие попапа на клавишу ESC
+ function keyHandler(evt) {
+   if (evt.key === 'Escape') {
+    popupClass.forEach(function(element) {
+      const popup = element.closest('.popup');
+           closePopup(popup);
+      })
+    }
+} 
+document.addEventListener('keydown', keyHandler); 
 
 //Popup Image
 function setOpenImagePopupHandler(item) {
@@ -156,4 +182,3 @@ item.querySelector('.element__trashbutton').addEventListener('click', function (
 });
 
 }
-
