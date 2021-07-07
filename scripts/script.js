@@ -110,16 +110,17 @@ function popupHandler(popupElement) {
      });
    });
 }
-
-
 //Кнопка Закрытия
 popupHandler(popupButton);
+
 //Закрытие по оверлею
-Сделать!
-
-
-
-//popupHandler(popupClass);
+popupClass.forEach(function(element) {
+  element.addEventListener('click', function(evt) {
+    if (element == evt.target){
+    closePopup(element);
+    }
+  })
+});
 
  //Закрытие попапа на клавишу ESC
  function keyHandler(evt) {
