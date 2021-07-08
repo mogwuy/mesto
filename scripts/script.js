@@ -120,29 +120,6 @@ popupClass.forEach(function(element) {
 });
 });
 
-//Слушатель на каждую кнопку закрытия Попапа
-//function popupHandler(popupElement) {
-//  popupElement.forEach(function(element) {
-//    const popup = element.closest('.popup');
-//     element.addEventListener('click', () => {
-//       closePopup(popup);
-//    });
-//   });
-//}
-//Кнопка Закрытия
-//popupHandler(popupButton);
-
-//Закрытие по оверлею
-//popupClass.forEach(function(element) {
-//  element.addEventListener('mousedown', function(evt) {
- //   if (element == evt.target){
- //   closePopup(element);
-//    }
- // })
-//});
-
- 
-
 //Popup Image
 function setOpenImagePopupHandler(item) {
   item.querySelector('#open-image').addEventListener('click', function (evt) {
