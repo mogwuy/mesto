@@ -29,7 +29,6 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__window/popup__window.css);
-@import url(../blocks/popup/_closed/popup_closed.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__input-error/popup__input-error.css);
@@ -44,4 +43,3 @@
 @import url(../blocks/popup/__imgbutton/popup__imgbutton.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-/* Почему-то в гит не поттянулся, коммент здесь для этого */
