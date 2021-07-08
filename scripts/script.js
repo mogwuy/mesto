@@ -139,7 +139,7 @@ if (evt.key === 'Escape') {
 
 //Закрытие по оверлею и Кнопке закрытия
 popupClass.forEach(function(element) {
-  element.addEventListener('click', (evt) => {
+  element.addEventListener('mousedown', (evt) => {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
     closePopup(element);
   }
