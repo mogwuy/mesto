@@ -102,24 +102,6 @@ addButton.addEventListener('click', () => {
   openPopup(popupAdd);
 });
 
-
-//Закрыть каждый попап
-//function closeAllPopup (popupClass) {
-// popupClass.forEach(function(element) {
-//  const popup = element.closest('.popup');
-//  closePopup(popup);
-// });
-//}
-
-//слушатель всех кнопок закрытия
-//document.addEventListener('click', function (evt) {
-  // если нажали на «кнопку закрытия» - закрыть окно
- // if (evt.target.classList.contains('popup__close')) {
- //   closeAllPopup(popupClass);
- // }
- // // иначе ничего делать не нужно
-//}); 
-
 //Закрытие попапа на клавишу ESC
 function keyHandler(evt) {
 if (evt.key === 'Escape') {
@@ -130,44 +112,14 @@ if (evt.key === 'Escape') {
    }
 } 
 
-//Закрытие по оверлею
-//document.addEventListener('mousedown', function (evt) {
-//  if (evt.target.classList.contains('popup_opened') && !evt.target.classList.contains('popup_window') ) {
-//    closeAllPopup(popupClass);
-//   }
-//});
-
 //Закрытие по оверлею и Кнопке закрытия
 popupClass.forEach(function(element) {
-  element.addEventListener('click', (evt) => {
+  element.addEventListener('mousedown', (evt) => {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
     closePopup(element);
   }
 });
 });
-
-//Слушатель на каждую кнопку закрытия Попапа
-//function popupHandler(popupElement) {
-//  popupElement.forEach(function(element) {
-//    const popup = element.closest('.popup');
-//     element.addEventListener('click', () => {
-//       closePopup(popup);
-//    });
-//   });
-//}
-//Кнопка Закрытия
-//popupHandler(popupButton);
-
-//Закрытие по оверлею
-//popupClass.forEach(function(element) {
-//  element.addEventListener('mousedown', function(evt) {
- //   if (element == evt.target){
- //   closePopup(element);
-//    }
- // })
-//});
-
- 
 
 //Popup Image
 function setOpenImagePopupHandler(item) {
@@ -193,9 +145,6 @@ formElementEdit.addEventListener('submit', handleProfileSubmit);
 //Добавление Карточек
 function handleNewCardSubmit(evt) {
   evt.preventDefault(); 
-  //Добавление в массив карточек.
-  //initialCards.unshift({name: mestoInput.value, link: scrInput.value});
-
   //Дизактивация кнопки
   submitAddButton.classList.add('popup__submit_disabled');
   submitAddButton.setAttribute('disabled', true);
@@ -204,28 +153,8 @@ function handleNewCardSubmit(evt) {
   cards.prepend(createCard(scrInput.value, mestoInput.value)); 
   //Сброс Окна ввода к дефолтным значениям, чтобы карточки одинакого повторно не загрузили
   formElementAdd.reset();
-  //Способ с удалением значений
-  //document.querySelectorAll('.popup__input').forEach(function(item) {
-  //  item.value = item.defaultValue;
-  // });
-
-    //Добалвение новых карточек путем перерисовки массива
-    // Удаление прошлых элементов
-    // const cards = document.querySelectorAll('.element');
-    //cards.forEach((item) => {
-    //  item.remove();
-    // });
-    // Рисуем карточки заного
-    //renderCards();
 }
 formElementAdd.addEventListener('submit', handleNewCardSubmit); 
-
-//Создание карточки по нажатию Enter
-//formElementAdd.addEventListener('keydown', function (evt) {
-//  if (evt.key === 'Enter' && !evt.target.classList.contains('popup__submit_disabled')) {
-//   handleNewCardSubmit;
-//  }
-//}); 
 
 //Удаление Карточки
 function setDeleteCardHandler(item) {
