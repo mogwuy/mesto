@@ -43,9 +43,11 @@
       <button class="popup__button" type="button" id="close-button-edit"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
       <div class="popup__content">
         <h2 class="popup__title">Редактировать Профиль</h2>
-        <form class="popup__container" name="popupform" id="form-edit">
-          <input type="text" placeholder="Имя" id= "name" class="popup__input" name="inputpopup">
-          <input type="text" placeholder="О себе" id= "subname" class="popup__input" name="inputpopup">
+        <form class="popup__container" name="popupform" id="form-edit" novalidate>
+          <input type="text" placeholder="Имя" id= "name" class="popup__input" name="inputpopup" minlength="2" maxlength="40" required>
+          <span class="popup__input-error name-error" ></span>
+          <input type="text" placeholder="О себе" id= "subname" class="popup__input" name="inputpopup" minlength="2" maxlength="200" required>
+          <span class="popup__input-error subname-error" ></span>
           <input type="submit" class="popup__submit" id="submitedit" value="Сохранить">
         </form>
       </div>
@@ -56,9 +58,11 @@
       <button class="popup__button" type="button" id="close-button-add"><img class="popup__close" src="images/add_button.svg" alt="Закрыть"></button>
       <div class="popup__content">
         <h2 class="popup__title">Новое Место</h2>
-        <form class="popup__container" name="popupform" id="form-add">
-          <input type="text" placeholder="Название" id= "mestoname" class="popup__input" name="inputpopup">
-          <input type="text" placeholder="Ссылка на картинку" id= "mestosrc" class="popup__input" name="inputpopup">
+        <form class="popup__container" name="popupform" id="form-add" novalidate>
+          <input type="text" placeholder="Название" id= "mestoname" class="popup__input" name="inputpopup" minlength="2" maxlength="30" required>
+          <span class="popup__input-error mestoname-error" ></span>
+          <input type="url" placeholder="Ссылка на картинку" id= "mestosrc" class="popup__input" name="inputpopup" required>
+          <span class="popup__input-error mestosrc-error" ></span>
           <input type="submit" class="popup__submit" id="submitadd" value="Создать">
         </form>
       </div>
@@ -83,5 +87,6 @@
   </template>
 
   <script src="scripts/script.js"></script>
+  <script src="scripts/validate.js"></script>
 </body>
 </html>

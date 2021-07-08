@@ -11,6 +11,8 @@ const mestoInput = document.querySelector('#mestoname');
 const scrInput = document.querySelector('#mestosrc');
 const nameProfile = document.querySelector('#profileName')
 const subnameProfile =  document.querySelector('#profileSubname')
+const popupButton = document.querySelectorAll('.popup__button');
+const popupClass = document.querySelectorAll('.popup');
 const initialCards = [
   {
     name: 'Архыз',
@@ -73,6 +75,7 @@ function setLickeClickHandler(item) {
 function openPopup(popupItem) {
   popupItem.classList.add('popup_opened');
   popupItem.classList.remove('popup_closed');
+  document.addEventListener('keydown', keyHandler); 
 }
 
 // Функция обновления данных в попапе Edit
@@ -85,6 +88,7 @@ function fillProfileInputs() {
 function closePopup(popupRemove) {
   popupRemove.classList.remove('popup_opened');
   popupRemove.classList.add('popup_closed');
+  document.removeEventListener('keydown', keyHandler); 
 }
 
 // Popup Edit
@@ -98,13 +102,60 @@ addButton.addEventListener('click', () => {
   openPopup(popupAdd);
 });
 
-//Кнопка Закрытия
-document.querySelectorAll('.popup__button').forEach(function(button) {
-  const popup = button.closest('.popup')
-   button.addEventListener('click', () => {
-     closePopup(popup);
-   });
+
+//Закрыть каждый попап
+function closeAllPopup (popupClass) {
+ popupClass.forEach(function(element) {
+  const popup = element.closest('.popup');
+  closePopup(popup);
  });
+}
+
+//слушатель всех кнопок закрытия
+document.addEventListener('click', function (evt) {
+  // если нажали на «кнопку закрытия», поставь лайк
+  if (evt.target.classList.contains('popup__close')) {
+    closeAllPopup(popupClass);
+  }
+  // иначе ничего делать не нужно
+}); 
+
+//Закрытие попапа на клавишу ESC
+function keyHandler(evt) {
+if (evt.key === 'Escape') {
+  closeAllPopup(popupClass);
+   }
+} 
+
+//Закрытие по оверлею
+document.addEventListener('mousedown', function (evt) {
+  if (evt.target.classList.contains('popup_opened') && !evt.target.classList.contains('popup_window') ) {
+    closeAllPopup(popupClass);
+   }
+});
+
+//Слушатель на каждую кнопку закрытия Попапа
+//function popupHandler(popupElement) {
+//  popupElement.forEach(function(element) {
+//    const popup = element.closest('.popup');
+//     element.addEventListener('click', () => {
+//       closePopup(popup);
+//    });
+//   });
+//}
+//Кнопка Закрытия
+//popupHandler(popupButton);
+
+//Закрытие по оверлею
+//popupClass.forEach(function(element) {
+//  element.addEventListener('mousedown', function(evt) {
+ //   if (element == evt.target){
+ //   closePopup(element);
+//    }
+ // })
+//});
+
+ 
 
 //Popup Image
 function setOpenImagePopupHandler(item) {
@@ -124,6 +175,7 @@ function handleProfileSubmit (evt) {
   closePopup(popupEdit);
 }
 formElementEdit.addEventListener('submit', handleProfileSubmit); 
+
 
 //Добавление Карточек
 function handleNewCardSubmit(evt) {
@@ -148,6 +200,12 @@ function handleNewCardSubmit(evt) {
     //renderCards();
 }
 formElementAdd.addEventListener('submit', handleNewCardSubmit); 
+//Создание карточки по нажатию Enter
+formElementAdd.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter' && !evt.target.classList.contains('popup__submit_disabled')) {
+   handleNewCardSubmit;
+  }
+}); 
 
 //Удаление Карточки
 function setDeleteCardHandler(item) {
@@ -156,4 +214,3 @@ item.querySelector('.element__trashbutton').addEventListener('click', function (
 });
 
 }
-
