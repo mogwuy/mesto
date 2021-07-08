@@ -1,26 +1,26 @@
 //Выводим ошибку
-function showInputError(formElement, inputElement, errorMessage) {
+function showInputError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add('popup__input-error_type');
+    inputElement.classList.add(inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add('popup__input-error_active');
+    errorElement.classList.add(errorClass);
   };
   
 //Прячем оишбку
-  function hideInputError(formElement, inputElement)  {
+  function hideInputError(formElement, inputElement, inputErrorClass, errorClass)  {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove('popup__input-error_type');
-    errorElement.classList.remove('popup__input-error_active');
+    inputElement.classList.remove(inputErrorClass);
+    errorElement.classList.remove(errorClass);
     errorElement.textContent = '';
   };
   
   //Проверяем ввод в форму
-  function checkInputValidity(formElement, inputElement)  {
+  function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass)  {
     if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage);
+      showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
       
     } else {
-      hideInputError(formElement, inputElement);
+      hideInputError(formElement, inputElement, inputErrorClass, errorClass);
     }
   };
 
@@ -32,40 +32,50 @@ function showInputError(formElement, inputElement, errorMessage) {
   }; 
   
   //Отключение и Включение кнопки submit
-  function toggleButtonState(inputList, buttonElement)  {
+  function toggleButtonState(inputList, buttonElement, inactiveButtonClass)  {
     if (hasInvalidInput(inputList)) {
-      buttonElement.classList.add('popup__submit_disabled');
+      buttonElement.classList.add(inactiveButtonClass);
       buttonElement.setAttribute('disabled', true)
     } else {
-      buttonElement.classList.remove('popup__submit_disabled');
+      buttonElement.classList.remove(inactiveButtonClass);
       buttonElement.removeAttribute('disabled')
     }
   }; 
   
 //Подключение ожидания
-  function setEventListeners(formElement) {
-    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-    const buttonElement = formElement.querySelector('.popup__submit');
-    toggleButtonState(inputList, buttonElement);
+  function setEventListeners(formElement, inputList, buttonElement, inactiveButtonClass, inputErrorClass, errorClass) {
+    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
-        checkInputValidity(formElement, inputElement);
-        toggleButtonState(inputList, buttonElement);
+        checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
+        toggleButtonState(inputList, buttonElement, inactiveButtonClass);
       });
     });
   }; 
   
 //Включение валидации на формы
-  function enableValidation() {
-    const formList = Array.from(document.querySelectorAll('.popup__container'));
+  function enableValidation(options) {
+    const formList = Array.from(document.querySelectorAll(options.formSelector));
+    const inactiveButtonClass = options.inactiveButtonClass;
+    const inputErrorClass = options.inputErrorClass;
+    const errorClass = options.errorClass
     formList.forEach((formElement) => {
-      setEventListeners(formElement);
+      const inputList = Array.from(formElement.querySelectorAll(options.inputSelector));
+      const buttonElement = formElement.querySelector(options.submitButtonSelector);
+      setEventListeners(formElement, inputList, buttonElement, inactiveButtonClass, inputErrorClass, errorClass);
       formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
       });
     });
   };
-  enableValidation();
 
-   
+  //Включение Валидации
+  enableValidation({
+    formSelector: '.popup__container',
+    inputSelector: '.popup__input',  
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input-error_type',
+    errorClass: 'popup__input-error_active'
+  });    
   
