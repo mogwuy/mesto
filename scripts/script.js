@@ -44,6 +44,7 @@ const initialCards = [
 const elementTemplate = document.querySelector('#elementcard').content;
 const cards = document.querySelector('.elements');
 
+
 //Создание Карточек
 function createCard(cardImage, cardText) {
   const cardElement  = elementTemplate.querySelector('.element').cloneNode(true); 
@@ -120,29 +121,6 @@ popupClass.forEach(function(element) {
 });
 });
 
-//Слушатель на каждую кнопку закрытия Попапа
-//function popupHandler(popupElement) {
-//  popupElement.forEach(function(element) {
-//    const popup = element.closest('.popup');
-//     element.addEventListener('click', () => {
-//       closePopup(popup);
-//    });
-//   });
-//}
-//Кнопка Закрытия
-//popupHandler(popupButton);
-
-//Закрытие по оверлею
-//popupClass.forEach(function(element) {
-//  element.addEventListener('mousedown', function(evt) {
- //   if (element == evt.target){
- //   closePopup(element);
-//    }
- // })
-//});
-
- 
-
 //Popup Image
 function setOpenImagePopupHandler(item) {
   item.querySelector('#open-image').addEventListener('click', function (evt) {
@@ -163,6 +141,7 @@ function handleProfileSubmit (evt) {
 }
 formElementEdit.addEventListener('submit', handleProfileSubmit); 
 
+
 //Добавление Карточек
 function handleNewCardSubmit(evt) {
   evt.preventDefault(); 
@@ -176,12 +155,6 @@ function handleNewCardSubmit(evt) {
   formElementAdd.reset();
 }
 formElementAdd.addEventListener('submit', handleNewCardSubmit); 
-//Создание карточки по нажатию Enter
-formElementAdd.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter' && !evt.target.classList.contains('popup__submit_disabled')) {
-   handleNewCardSubmit;
-  }
-}); 
 
 //Удаление Карточки
 function setDeleteCardHandler(item) {
