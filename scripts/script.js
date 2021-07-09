@@ -73,7 +73,7 @@ function setLickeClickHandler(item) {
 }); 
 }
 
-//Открытие попапов и закрытие
+//Открытие попапов
 function openPopup(popupItem) {
   popupItem.classList.add('popup_opened');
   document.addEventListener('keydown', keyHandler); 
@@ -104,12 +104,10 @@ addButton.addEventListener('click', () => {
 
 //Закрытие попапа на клавишу ESC
 function keyHandler(evt) {
-if (evt.key === 'Escape') {
-  popupClass.forEach(function(element) {
-    const popup = element.closest('.popup');
-    closePopup(popup);
-  });
-   }
+  if (evt.key === 'Escape') {
+    const popupActive = document.querySelector('.popup_opened');
+    closePopup(popupActive);
+  }
 } 
 
 //Закрытие по оверлею и Кнопке закрытия
