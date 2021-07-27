@@ -1,4 +1,4 @@
-import {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, popupClass, submitAddButton, initialCards, obj} from './data.js'
+import {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, popupsClass, submitAddButton, initialCards, obj} from './data.js'
 import {Card} from './card.js'
 import {FormValidator} from './formValidator.js'
 
@@ -7,6 +7,16 @@ import {FormValidator} from './formValidator.js'
 function openPopup(popupItem) {
   popupItem.classList.add('popup_opened');
   document.addEventListener('keydown', keyHandler); 
+}
+
+//Открытие попа с карточкой
+function handleCardClick(name, link) {
+  const popupImage = document.querySelector('#popup-image');
+  const imageElement = document.querySelector('.popup__image');
+  imageElement.src = link;
+  imageElement.alt = name;
+  openPopup(popupImage);
+  document.querySelector('.popup__text').textContent = name;
 }
 
 // Функция обновления данных в попапе Edit
@@ -41,7 +51,7 @@ function keyHandler(evt) {
 } 
 
 //Закрытие по оверлею и Кнопке закрытия
-popupClass.forEach(function(element) {
+popupsClass.forEach(function(element) {
   element.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
     closePopup(element);
@@ -60,7 +70,7 @@ formElementEdit.addEventListener('submit', handleProfileSubmit);
 
 //Рисуем карточки из массива
 initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, item.text);
+  const card = new Card(item.name, item.link, item.text, '#elementcard', handleCardClick);
   const cardElement = card.generateCard();
   document.querySelector('.elements').append(cardElement);
 });
@@ -73,7 +83,7 @@ function handleNewCardSubmit(evt) {
   submitAddButton.setAttribute('disabled', true);
   //Закрываем попап
   closePopup(popupAdd);
-  const card = new Card(mestoInput.value, scrInput.value);
+  const card = new Card(mestoInput.value, scrInput.value, mestoInput.value, '#elementcard', handleCardClick);
   document.querySelector('.elements').prepend(card.generateCard()); 
   //Сброс Окна ввода к дефолтным значениям, чтобы карточки одинакого повторно не загрузили
   formElementAdd.reset();
@@ -86,6 +96,6 @@ validatorFormEdit.enableValidation();
 const validatorFormAdd = new FormValidator (obj, formElementAdd);
 validatorFormAdd.enableValidation();
 
-export {openPopup}
+export {handleCardClick}
 
 

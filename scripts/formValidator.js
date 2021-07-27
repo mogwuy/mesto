@@ -16,18 +16,6 @@ class FormValidator {
     })
   }; 
 
-//Отключение и Включение кнопки submit
-  _toggleButtonState(inputList)  {
-    const buttonElement = formElement.querySelector(this._submitButtonSelector);
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute('disabled', true)
-    } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.removeAttribute('disabled')
-    }
-  }; 
-
 //Выводим ошибку
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
