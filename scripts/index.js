@@ -1,6 +1,6 @@
 import {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, popupsClass, submitAddButton, initialCards, cardElements, obj} from './data.js'
-import {Card} from './card.js'
-import {FormValidator} from './formValidator.js'
+import {Card} from './Card.js'
+import {FormValidator} from './FormValidator.js'
 
 //Вызов валидации двух форм
 const validatorFormEdit = new FormValidator (obj, formElementEdit);
