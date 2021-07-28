@@ -27,27 +27,31 @@ class Card {
   };
 
 //Удаление Карточки
-  _setDeleteCardHandler(_item) {
-    _item.querySelector('.element__trashbutton').addEventListener('click', function (evt) {
-      _item.remove(); //удаляем карточки
+  _setDeleteCardHandler() {
+      this._element.querySelector('.element__trashbutton').addEventListener('click', (evt) => {
+      this._element.remove(); //удаляем карточки
     });
   };
+
+//Слушатели
+  _setEventListeners() {
+    this._setLickeClickHandler();
+    this._setDeleteCardHandler();
+    this._imageElement.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link)
+    });
+  }
 
 //Генерация карточки
   generateCard() {
       this._element = this._getTemplate();
       this._likeButton = this._element.querySelector('.element__like')
-      const _imageElement = this._element.querySelector('.element__image');
-      _imageElement.src = this._link;
-      _imageElement.alt = this._text;
+      this._imageElement = this._element.querySelector('.element__image');
+      this._imageElement.src = this._link;
+      this._imageElement.alt = this._text;
       this._element.querySelector('.element__title').textContent = this._name;
-
-      this._setLickeClickHandler();
-      this._setDeleteCardHandler(this._element);
-      _imageElement.addEventListener('click', () => {
-        this._handleCardClick(this._name, this._link)
-      });
-
+      this._setEventListeners();
+      
       return this._element;
   };
 };

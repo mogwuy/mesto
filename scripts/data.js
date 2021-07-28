@@ -10,9 +10,12 @@ const mestoInput = document.querySelector('#mestoname');
 const scrInput = document.querySelector('#mestosrc');
 const nameProfile = document.querySelector('#profileName')
 const subnameProfile =  document.querySelector('#profileSubname')
-const popupsClass = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const submitAddButton = document.querySelector('#submitadd');
 const cardElements = document.querySelector('.elements');
+const popupImage = document.querySelector('#popup-image');
+const imageElement = document.querySelector('.popup__image');
+const popupText = document.querySelector('.popup__text');
 
 const obj = {
     formSelector: '.popup__container',
@@ -50,4 +53,4 @@ const initialCards = [
     }
   ]; 
 
-export {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, popupsClass, submitAddButton, initialCards, cardElements, obj}
+export {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, popups, submitAddButton, initialCards, popupImage, imageElement, popupText, cardElements, obj}
