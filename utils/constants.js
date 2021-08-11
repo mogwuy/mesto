@@ -1,7 +1,7 @@
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupEdit = document.querySelector('#popup-edit');
-const popupAdd = document.querySelector('#popup-add');
+const popupEdit = '#popup-edit';
+const popupAdd = '#popup-add';
 const formElementEdit = document.querySelector('#form-edit');
 const formElementAdd = document.querySelector('#form-add');
 const nameInput = document.querySelector('#name');
@@ -12,8 +12,8 @@ const nameProfile = document.querySelector('#profileName')
 const subnameProfile =  document.querySelector('#profileSubname')
 const popups = document.querySelectorAll('.popup');
 const submitAddButton = document.querySelector('#submitadd');
-const cardElements = document.querySelector('.elements');
-const popupImage = document.querySelector('#popup-image');
+const cardElements = '.elements';
+const popupImage = '#popup-image';
 const imageElement = document.querySelector('.popup__image');
 const popupText = document.querySelector('.popup__text');
 
