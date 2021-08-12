@@ -6,6 +6,7 @@ import Popup from '../components/Popup.js'
 import PopupWithImage from '../components/PopupWithImage.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 import UserInfo from '../components/UserInfo.js'
+import '../pages/index.css'; // импорт главного файла стилей 
 
 //Вызов валидации двух форм
 const validatorFormEdit = new FormValidator (obj, formElementEdit);
