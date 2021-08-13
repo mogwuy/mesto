@@ -1,17 +1,20 @@
-import {nameProfile, subnameProfile} from '../utils/constants.js'
 export default class UserInfo {
-    constructor(nameInput, jobInput) {
-      this._nameInput = nameInput;
-      this._jobInput = jobInput;
+    constructor(nameProfile, subnameProfile) {
+      this._nameProfile = nameProfile;
+      this._subnameProfile = subnameProfile;
     }
 
     getUserInfo(){
-        this._nameInput.value = nameProfile.textContent;
-        this._jobInput.value = subnameProfile.textContent;
+      this._userData = {};
+      this._userData.name = this._nameProfile.textContent;
+      this._userData.subname = this._subnameProfile.textContent;
+      return this._userData
     }
 
-    setUserInfo = () => {
-      nameProfile.textContent = this._nameInput.value;
-      subnameProfile.textContent = this._jobInput.value;
+    setUserInfo = (userData) => {
+      userData.forEach(item => {
+       this._nameProfile.textContent = item.title;
+       this._subnameProfile.textContent = item.subname;
+       });
     }
 }
