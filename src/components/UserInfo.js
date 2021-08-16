@@ -11,10 +11,8 @@ export default class UserInfo {
       return this._userData
     }
 
-    setUserInfo = (userData) => {
-      userData.forEach(item => {
-       this._nameProfile.textContent = item.title;
-       this._subnameProfile.textContent = item.subname;
-       });
+    setUserInfo = (userData) => { 
+       this._nameProfile.textContent = userData.title;
+       this._subnameProfile.textContent = userData.subname;  
     }
 }

@@ -13,25 +13,28 @@ import '../pages/index.css'; // импорт главного файла сти�
 const cardList = new Section ({
 items: initialCards,
 renderer: (item) => {
-  const cardElement = [{ 
+  const cardElement = { 
     name: item.name, 
     link: item.link, 
     alt: item.name 
-  }]; 
-  createCard(cardElement);
+  }; 
+  addCard(cardElement);
   }
 }, cardElements)
 cardList.renderer();
 
-
+//Создание Карточки
 function createCard(data) {
-  data.forEach(item => {
-    const card = new Card(item.name, item.link, item.alt, '#elementcard', handleCardClick);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-    console.log(cardElement)
-    });
-    };
+    const card = new Card(data.name, data.link, data.alt, '#elementcard', handleCardClick);
+    const cardElem = card.generateCard();
+    return cardElem
+  };
+
+//Вставка карточки в DOM
+function addCard(data) {
+  const cardCreated = createCard(data);
+  cardList.addItem(cardCreated);
+};
 
 //Вызов валидации двух форм
 const validatorFormEdit = new FormValidator (obj, formElementEdit);
@@ -55,15 +58,11 @@ function handlePopupClick(userData){
 //Подставляем данные пользователя в форму при открытии
 function profileFormInputs() {
 const profileInputs = fillProfileInputs.getUserInfo();
-const userDataArr = [];
-userDataArr.push(profileInputs);
-userDataArr.forEach(item => {
-  nameInput.value = item.name;
-  jobInput.value = item.subname;
- });
+  nameInput.value = profileInputs.name;
+  jobInput.value = profileInputs.subname;
 }
 
-const openPopupUserInfo = new PopupWithForm (popupEdit, formElementEdit, handlePopupClick);
+const openPopupUserInfo = new PopupWithForm (popupEdit, handlePopupClick);
 // Popup Edit
 editButton.addEventListener('click', () => {
   profileFormInputs();
@@ -73,16 +72,9 @@ editButton.addEventListener('click', () => {
 openPopupUserInfo.setEventListeners();
 
 // Popup Add
-const openPopupWithForm = new PopupWithForm (popupAdd, formElementAdd, createCard);
+const openPopupWithForm = new PopupWithForm (popupAdd, addCard);
 addButton.addEventListener('click', () => {
   validatorFormAdd.resetValidation();
   openPopupWithForm.open();
 });
 openPopupWithForm.setEventListeners();
-
-
-
-
-
-
-
