@@ -3,6 +3,7 @@
     height: 19px;
     background-size: cover;
     transition: opacity .2s ease-out;
+    display: none;
   }
   
   .element__trash:hover {

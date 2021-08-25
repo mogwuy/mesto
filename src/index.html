@@ -7,6 +7,7 @@
   <meta name="description" content="Mesto Russia">
   <meta name="keywords" content="html, css, javascript">
   <meta name="author" content="Виталий Дердель">
+  <meta name="userId" content="11111">
 </head>
 
 <body class="page">
@@ -15,7 +16,7 @@
     <a href="#" target="_self"><img class="header__logo" src="<%=require('./images/header-logo.svg')%>" alt="Логотип"></a>
   </header>
       <section class="profile">
-          <div class="profile__avatar"></div>
+          <img class="profile__avatar" src="<%=require('./images/profile_avatar.jpg')%>"></img>
             <div class="profile__info">
               <div class="profile__name">
                 <h1 class="profile__title" id="profileName">Жак-Ив Кусто</h1>
@@ -30,7 +31,7 @@
           </button>
       </section>
       <section class="elements">
-          
+        <h2 class="elements__loading">Загрузка...</h2>
       </section>
    <footer class="footer">
     <p class="footer__copyright">© 2021 Mesto Russia</p>
@@ -73,13 +74,25 @@
         <p class="popup__text"></p>
     </div>
   </section>
+  <section class="popup" id="popup-del">
+    <div class="popup__window">
+      <button class="popup__button" type="button" id="close-button-del"><img class="popup__close" src="<%=require('./images/add_button.svg')%>" alt="Закрыть"></button>
+      <div class="popup__content">
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form class="popup__container" name="popupform" id="form-del" novalidate>
+            <input type="button" class="popup__submit" id="submitdel" value="Да">
+        </form>
+      </div>
+    </div>
+  </section>
   <template id="elementcard">
     <div class="element">
       <button class="popup__imgbutton" type="button" id="open-image"><img class="element__image" src="<%=require('./images/kirill-pershin-1088404-unsplash.jpg')%>" alt="Изображение"></button>
       <button class="element__trashbutton" type="button" id="remove-image"><img class="element__trash" src="<%=require('./images/trash.svg')%>" alt="Удалить изображение"></button>
       <div class="element__string">
         <h2 class="element__title">Карачаевск</h2>
-        <button type="button" class="element__like"></button>   
+        <button type="button" class="element__like"><p class="element__nlikes">0</p></button>
+           
       </div>    
     </div>    
   </template>
