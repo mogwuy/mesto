@@ -30,8 +30,8 @@ class Card {
   _setLickeClickHandler(cardId, addLike, likes, ownerId) {
     this._likeButton.addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
-    addLike(cardId, likes, ownerId, evt); //Почему-то через this не попадало в область видимости, пришлось передавать. 
-    //this._addLike(this._cardId, this._likes, this._ownerId);
+    addLike(cardId, likes, evt); //Почему-то через this не попадало в область видимости, пришлось передавать. 
+    //this._addLike(this._cardId, this._likes, evt);
   }); 
   };
 

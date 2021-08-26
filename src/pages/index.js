@@ -7,16 +7,8 @@ import PopupWithImage from '../components/PopupWithImage.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 import PopupWithDel from '../components/PopupWithDel.js'
 import UserInfo from '../components/UserInfo.js'
+import Api from '../components/Api.js'
 import '../pages/index.css'; // импорт главного файла стилей 
-//Подключалка к серверу
-function connector(entity) {
-return fetch(`https://mesto.nomoreparties.co/v1/cohort-27/${entity}`, {
-  headers: {
-    authorization: '822c2109-7d84-466c-adc0-fb811f9f5603'
-  },
-  mode: 'cors'
-})
-};
 
 //Вызов валидации трех форм
 const validatorFormEdit = new FormValidator (obj, formElementEdit);
@@ -26,41 +18,27 @@ validatorFormAdd.enableValidation();
 const validatorFormAvatar = new FormValidator (obj, formElementAvatar);
 validatorFormAvatar.enableValidation();
 
-connector('users/me')
-.then((res) => {
-  if (res.ok) {
-    return res.json()
-  }
-   return Promise.reject(res.status);
-  }) 
-    .then((result) => {
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/'
+}); 
 
-      return result;
-  })
- .then((usersData) => {
+api.getInitialCards('users/me')
+  .then((usersData) => {
     //Подставляем данные о пользователе.
     function addProfileInform(data) {
       nameProfile.textContent = data.name;
       subnameProfile.textContent = data.about;
       profileAvatarImage.src = data.avatar;
-   }
-  addProfileInform(usersData)
-
-   
-
-  connector('cards')
-    .then((res) => {
-      if (res.ok) {
-       return res.json()
     }
-    return Promise.reject(res.status);
-    }) 
-      .then((result) => {
-        let cards = Array.from(result);
-        cards.reverse(); //Разворачиваем массив, что бы новые карточки были вверху
-        return cards;
-      })
-        .then((cards) =>{
+  addProfileInform(usersData)
+   
+api.getInitialCards('cards')
+  .then((result) => {
+    let cards = Array.from(result);
+      cards.reverse(); //Разворачиваем массив, что бы новые карточки были вверху
+      return cards;
+    })
+      .then((cards) =>{
         //Рисуем секцию карточек
         const cardList = new Section ({
         items: cards,
@@ -76,7 +54,7 @@ connector('users/me')
           }; 
           addCard(cardElement);
           }
-        }, cardElements)
+        }, cardElements);
         cardList.renderer();
      
        //Создание Карточки
@@ -99,67 +77,24 @@ connector('users/me')
         openPopupWithForm.open();
         });
         openPopupWithForm.setEventListeners();
-
-
-
-
+        
         //Проверка стоит ли уже лайк
         function likeValidate(likes) {
           if (likes.find(like => like._id === usersData._id)) {
           return true
           } else {return false}
          return
-        }
-
-        //ДизЛайк
-        function disLike(cardId, likes, ownerId, evt) {
-        fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/${cardId}`, {
-         method: 'DELETE',
-         headers: {
-            authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-            'Content-Type': 'application/json'
-          },
-         })
-         .then((res) => {
-          if (res.ok) {
-           return res.json()
+        };
+    
+         //Лайки
+         function addLike(cardId, likes, evt) {
+           if (likeValidate(likes)) {
+            api.getLikes(cardId, evt, 'DELETE');
+          } else {
+            api.getLikes(cardId, evt, 'PUT')
           }
-        })
-        .then((result) => {
-          const data = Array.from(result.likes);
-          evt.target.querySelector('.element__nlikes').textContent = data.length;
-        })
-      }
-
-        
-
-
-         //Лайки Отправка
-         function addLike(cardId, likes, ownerId, evt) {
-          if (likeValidate(likes))
-         {
-          disLike(cardId, likes, ownerId, evt);
-
-         } else {
-         fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/${cardId}`, {
-          method: 'PUT',
-          headers: {
-            authorization: '822c2109-7d84-466c-adc0-fb811f9f5603'
-          },
-          mode: 'cors'
-         })
-         .then((res) => {
-          if (res.ok) {
-           return res.json()
-          }
-        })
-        .then((result) => {
-          const data = Array.from(result.likes);
-          evt.target.querySelector('.element__nlikes').textContent = data.length;
-        })
-
-      }
          };
+         
         
 //Отправка отредактированных данных пользователя
   function nameUploader(userData, callBack) {
