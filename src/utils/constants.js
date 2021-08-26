@@ -1,10 +1,13 @@
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
+const editAvatar = document.querySelector('.profile__avatar')
 const popupEdit = '#popup-edit';
 const popupAdd = '#popup-add';
 const popupDel = '#popup-del';
+const popupAvatar = "#popup-avatar";
 const formElementEdit = document.querySelector('#form-edit');
 const formElementAdd = document.querySelector('#form-add');
+const formElementAvatar = document.querySelector('#popup-avatar');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#subname');
 const mestoInput = document.querySelector('#mestoname');
@@ -18,6 +21,7 @@ const popupImage = '#popup-image';
 const imageElement = document.querySelector('.popup__image');
 const popupText = document.querySelector('.popup__text');
 const profileAvatar = document.querySelector('.profile__avatar');
+const profileAvatarImage = document.querySelector('.profile__avatar_image');
 
 const obj = {
     formSelector: '.popup__container',
@@ -30,4 +34,4 @@ const obj = {
 
 
 
-export {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, profileAvatar, popups, submitAddButton, popupImage, popupDel, imageElement, popupText, cardElements, obj}
+export {editButton, addButton, popupEdit, popupAdd, formElementEdit, formElementAdd, formElementAvatar, nameInput, jobInput, mestoInput, scrInput, nameProfile, subnameProfile, profileAvatarImage, profileAvatar, editAvatar, popups, submitAddButton, popupImage, popupDel, popupAvatar, imageElement, popupText, cardElements, obj}

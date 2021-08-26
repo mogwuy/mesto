@@ -1,0 +1,11 @@
+.profile__avatar_edit {
+    background-image: url(../../../images/avatar_edit.svg);
+    display: block;
+    height: 26px;
+    width: 25px;
+    position: absolute;
+    top: 47px;
+    left: 47px;
+    visibility:hidden;
+    cursor: pointer;
+}

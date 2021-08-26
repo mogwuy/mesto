@@ -1,4 +1,4 @@
-import {editButton, addButton, popupEdit, popupAdd, popupDel, formElementEdit, formElementAdd, nameProfile, subnameProfile, profileAvatar, nameInput, jobInput, popupImage, cardElements, obj} from '../utils/constants.js'
+import {editButton, addButton, editAvatar, popupEdit, popupAdd, popupDel, popupAvatar, formElementEdit, formElementAdd, formElementAvatar, nameProfile, subnameProfile, profileAvatarImage, profileAvatar, nameInput, jobInput, popupImage, cardElements, obj} from '../utils/constants.js'
 import {Card} from '../components/Card.js'
 import {FormValidator} from '../components/FormValidator.js'
 import Section from '../components/Section.js'
@@ -18,11 +18,13 @@ return fetch(`https://mesto.nomoreparties.co/v1/cohort-27/${entity}`, {
 })
 };
 
-//Вызов валидации двух форм
+//Вызов валидации трех форм
 const validatorFormEdit = new FormValidator (obj, formElementEdit);
 validatorFormEdit.enableValidation();
 const validatorFormAdd = new FormValidator (obj, formElementAdd);
 validatorFormAdd.enableValidation();
+const validatorFormAvatar = new FormValidator (obj, formElementAvatar);
+validatorFormAvatar.enableValidation();
 
 connector('users/me')
 .then((res) => {
@@ -32,14 +34,19 @@ connector('users/me')
    return Promise.reject(res.status);
   }) 
     .then((result) => {
-      //Подставляем данные о пользователе.
-      nameProfile.textContent = result.name;
-      subnameProfile.textContent = result.about;
-      profileAvatar.src = result.avatar;
-      //document.querySelector('meta[name="userId"]').content = result._id;
+
       return result;
   })
  .then((usersData) => {
+    //Подставляем данные о пользователе.
+    function addProfileInform(data) {
+      nameProfile.textContent = data.name;
+      subnameProfile.textContent = data.about;
+      profileAvatarImage.src = data.avatar;
+   }
+  addProfileInform(usersData)
+
+   
 
   connector('cards')
     .then((res) => {
@@ -119,7 +126,6 @@ connector('users/me')
           }
         })
         .then((result) => {
-          console.log(result)
           const data = Array.from(result.likes);
           evt.target.querySelector('.element__nlikes').textContent = data.length;
         })
@@ -135,7 +141,6 @@ connector('users/me')
           disLike(cardId, likes, ownerId, evt);
 
          } else {
-           console.log('Лайка Нет') 
          fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/${cardId}`, {
           method: 'PUT',
           headers: {
@@ -149,7 +154,6 @@ connector('users/me')
           }
         })
         .then((result) => {
-          console.log(result)
           const data = Array.from(result.likes);
           evt.target.querySelector('.element__nlikes').textContent = data.length;
         })
@@ -203,7 +207,6 @@ connector('users/me')
           ownerId: result.owner._id,
           id: result._id,
           userId: usersData._id}
-          console.log('CardData', cardData);
          callBack(cardData);
         return cardData;
         })
@@ -258,13 +261,36 @@ function handlePopupDelete(elem, cardId) {
 }
 openPopupDel.setEventListeners();
 
+//popup Edit Avatar
+const openPopupEditAvatar = new PopupWithForm (popupAvatar, addProfileInform, avatarUploader);
+editAvatar.addEventListener('click', () => {
+        validatorFormAvatar.resetValidation();
+        openPopupEditAvatar.open();
+        });
+        openPopupEditAvatar.setEventListeners();
+
+
+
+function avatarUploader(data, callBack) {
+  fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me/avatar', {
+    method: 'PATCH',
+    headers: {
+      authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      avatar: data.link
+    })
+  })
+callBack(data);
+
+}
+
+
 
 
        })
       
-       
-
-  
   })
 
   .catch((err) => {

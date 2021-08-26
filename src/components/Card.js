@@ -64,7 +64,6 @@ class Card {
       this._imageElement.alt = this._text;
       this._element.querySelector('.element__title').textContent = this._name;
       if (this._likeValidate(this._likes) == true){
-        console.log('Карточка с лайком', this._name)
         this._likeButton.classList.add('element__like_active');
       }
       this._element.querySelector('.element__nlikes').textContent = this._likes.length;
