@@ -36,10 +36,10 @@ connector('users/me')
       nameProfile.textContent = result.name;
       subnameProfile.textContent = result.about;
       profileAvatar.src = result.avatar;
-      document.querySelector('meta[name="userId"]').content = result._id;
+      //document.querySelector('meta[name="userId"]').content = result._id;
       return result;
   })
- .then((userData) => {console.log('Область видимости', userData._id)
+ .then((usersData) => {console.log('Область видимости', usersData._id)
 
   connector('cards')
     .then((res) => {
@@ -65,7 +65,7 @@ connector('users/me')
             likes: item.likes,
             ownerId: item.owner._id,
             id: item._id,
-            userId: userData._id
+            userId: usersData._id
           }; 
           addCard(cardElement);
           }
