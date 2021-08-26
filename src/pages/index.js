@@ -39,7 +39,7 @@ connector('users/me')
       //document.querySelector('meta[name="userId"]').content = result._id;
       return result;
   })
- .then((usersData) => {console.log('Область видимости', usersData._id)
+ .then((usersData) => {
 
   connector('cards')
     .then((res) => {
@@ -81,6 +81,7 @@ connector('users/me')
     
         //Вставка карточки в DOM
         function addCard(data) {
+          console.log('Обьект с Карточкой', data)
           const cardCreated = createCard(data);
           cardList.addItem(cardCreated);
         };
@@ -94,7 +95,7 @@ connector('users/me')
         openPopupWithForm.setEventListeners();
         
 //Отправка отредактированных данных пользователя
-  function nameUploader(userData) {
+  function nameUploader(userData, callBack) {
     fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', {
       method: 'PATCH',
       headers: {
@@ -105,11 +106,14 @@ connector('users/me')
         name: userData.title,
         about: userData.subname
       })
-    }); 
+    }) 
+    .then (() => {
+     callBack(userData);
+    })
   }
 
   //Отправка новой карточки
-  function cardUploader(data) {
+  function cardUploader(data, callBack) {
     fetch('https://mesto.nomoreparties.co/v1/cohort-27/cards', {
       method: 'POST',
       headers: {
@@ -128,11 +132,21 @@ connector('users/me')
        return Promise.reject(res.status);
       }) 
         .then((result) => { 
-         const cardId = result._id
-          console.log('CardId', cardId)
-        return cardId;
+         const cardData = {
+          name: result.name, 
+          link: result.link, 
+          alt: result.name,
+          likes: result.likes,
+          ownerId: result.owner._id,
+          id: result._id,
+          userId: usersData._id}
+          console.log('CardData', cardData);
+         callBack(cardData);
+        return cardData;
         })
+        
   };
+
 
   //Удаление Карточки с Сервера
   function cardDeleter(cardId) {
