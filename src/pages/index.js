@@ -74,14 +74,13 @@ connector('users/me')
      
        //Создание Карточки
         function createCard(data) {
-          const card = new Card(data.name, data.link, data.alt, data.likes, data.ownerId, data.id, data.userId, '#elementcard', handleCardClick, handlePopupDelete);
+          const card = new Card(data.name, data.link, data.alt, data.likes, data.ownerId, data.id, data.userId, '#elementcard', likeValidate, addLike, handleCardClick, handlePopupDelete);
           const cardElem = card.generateCard();
           return cardElem
         };
     
         //Вставка карточки в DOM
         function addCard(data) {
-          console.log('Обьект с Карточкой', data)
           const cardCreated = createCard(data);
           cardList.addItem(cardCreated);
         };
@@ -93,6 +92,70 @@ connector('users/me')
         openPopupWithForm.open();
         });
         openPopupWithForm.setEventListeners();
+
+
+
+
+        //Проверка стоит ли уже лайк
+        function likeValidate(likes) {
+          if (likes.find(like => like._id === usersData._id)) {
+          return true
+          } else {return false}
+         return
+        }
+
+        //ДизЛайк
+        function disLike(cardId, likes, ownerId, evt) {
+        fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/${cardId}`, {
+         method: 'DELETE',
+         headers: {
+            authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
+            'Content-Type': 'application/json'
+          },
+         })
+         .then((res) => {
+          if (res.ok) {
+           return res.json()
+          }
+        })
+        .then((result) => {
+          console.log(result)
+          const data = Array.from(result.likes);
+          evt.target.querySelector('.element__nlikes').textContent = data.length;
+        })
+      }
+
+        
+
+
+         //Лайки Отправка
+         function addLike(cardId, likes, ownerId, evt) {
+          if (likeValidate(likes))
+         {
+          disLike(cardId, likes, ownerId, evt);
+
+         } else {
+           console.log('Лайка Нет') 
+         fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/${cardId}`, {
+          method: 'PUT',
+          headers: {
+            authorization: '822c2109-7d84-466c-adc0-fb811f9f5603'
+          },
+          mode: 'cors'
+         })
+         .then((res) => {
+          if (res.ok) {
+           return res.json()
+          }
+        })
+        .then((result) => {
+          console.log(result)
+          const data = Array.from(result.likes);
+          evt.target.querySelector('.element__nlikes').textContent = data.length;
+        })
+
+      }
+         };
         
 //Отправка отредактированных данных пользователя
   function nameUploader(userData, callBack) {
@@ -158,6 +221,7 @@ connector('users/me')
       }
     }); 
   } 
+
    
 //Открытие попа с карточкой
 const openPopup = new PopupWithImage (popupImage);

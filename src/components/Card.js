@@ -1,13 +1,15 @@
 class Card {
-  constructor(name, link, text, likes, ownerID, cardId, userId, cardElement, handleCardClick, handlePopupDelete) {
+  constructor(name, link, text, likes, ownerID, cardId, userId, cardElement, likeValidate, addLike, handleCardClick, handlePopupDelete) {
     this._name = name;
     this._link = link;
     this._text = text;
-    this._likes = likes.length;
+    this._likes = likes;
     this._ownerId = ownerID;
     this._cardId = cardId;
     this._userId = userId
     this._cardElement = cardElement;
+    this._likeValidate = likeValidate;
+    this._addLike = addLike;
     this._handleCardClick = handleCardClick;
     this._handlePopupDelete = handlePopupDelete;
   };
@@ -25,11 +27,14 @@ class Card {
   };
 
 // Лайки
-  _setLickeClickHandler() {
+  _setLickeClickHandler(cardId, addLike, likes, ownerId) {
     this._likeButton.addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
+    addLike(cardId, likes, ownerId, evt); //Почему-то через this не попадало в область видимости, пришлось передавать. 
+    //this._addLike(this._cardId, this._likes, this._ownerId);
   }); 
   };
+
 
 //Удаление Карточки
   _setDeleteCardHandler() {
@@ -41,7 +46,7 @@ class Card {
 
 //Слушатели
   _setEventListeners() {
-    this._setLickeClickHandler();
+    this._setLickeClickHandler(this._cardId, this._addLike, this._likes, this._ownerId);
     this._imageElement.addEventListener('click', () => {
     this._handleCardClick(this._name, this._link);
     });
@@ -58,7 +63,11 @@ class Card {
       this._imageElement.src = this._link;
       this._imageElement.alt = this._text;
       this._element.querySelector('.element__title').textContent = this._name;
-      this._element.querySelector('.element__nlikes').textContent = this._likes;
+      if (this._likeValidate(this._likes) == true){
+        console.log('Карточка с лайком', this._name)
+        this._likeButton.classList.add('element__like_active');
+      }
+      this._element.querySelector('.element__nlikes').textContent = this._likes.length;
       this._setEventListeners();
       
       return this._element;
