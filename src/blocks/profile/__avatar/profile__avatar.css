@@ -31,6 +31,6 @@
 
 
   .profile__avatar:hover .profile__avatar_edit {
-    visibility:visible
+    visibility:visible;
     }
     
