@@ -20,18 +20,16 @@ validatorFormAvatar.enableValidation();
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/'
-}, renderLoadingForm); 
+}); 
 
 api.getProfileData('users/me')
 
   .then((usersData) => {
     //Подставляем данные о пользователе.
     function addProfileInform(data) {
-      //nameProfile.textContent = data.name;
-      //subnameProfile.textContent = data.about;
-      //profileAvatarImage.src = data.avatar;
       const fillProfileData = new UserInfo (nameProfile, subnameProfile, profileAvatarImage)
       fillProfileData.setUserInfo(data);
+      profileAvatarImage.src = data.avatar;
           
     }
   addProfileInform(usersData)
@@ -76,7 +74,7 @@ api.getProfileData('users/me')
           }
 
           // Popup Add
-          const openPopupWithForm = new PopupWithForm (popupAdd, addCard, cardUploader, renderLoadingForm);
+          const openPopupWithForm = new PopupWithForm (popupAdd, addCard, cardUploader);
           addButton.addEventListener('click', () => {
             validatorFormAdd.resetValidation();
             openPopupWithForm.open();
@@ -146,7 +144,7 @@ api.getProfileData('users/me')
                 })
                 .finally(() => {
                   //Тут надо вывести загрузку
-                  renderLoadingForm(false, element)
+                   renderLoadingForm(false, element)
                 });
           }
 
@@ -185,7 +183,7 @@ api.getProfileData('users/me')
               })
               .finally(() => {
                 //Тут надо вывести загрузку
-                renderLoadingForm(false, element)
+                //renderLoadingForm(false, element)
               });
           } 
 
@@ -205,11 +203,11 @@ api.getProfileData('users/me')
           function profileFormInputs() {
             const profileInputs = fillProfileInputs.getUserInfo();
             nameInput.value = profileInputs.name;
-            jobInput.value = profileInputs.subname;
+            jobInput.value = profileInputs.about;
           }
     
           // Popup Edit
-          const openPopupUserInfo = new PopupWithForm (popupEdit, handlePopupClick, nameUploader, renderLoadingForm);
+          const openPopupUserInfo = new PopupWithForm (popupEdit, handlePopupClick, nameUploader);
           editButton.addEventListener('click', () => {
             profileFormInputs();
             openPopupUserInfo.open();
@@ -225,7 +223,7 @@ api.getProfileData('users/me')
           openPopupDel.setEventListeners();
 
           //popup Edit Avatar
-          const openPopupEditAvatar = new PopupWithForm (popupAvatar, addProfileInform, avatarUploader, renderLoadingForm);
+          const openPopupEditAvatar = new PopupWithForm (popupAvatar, addProfileInform, avatarUploader);
           editAvatar.addEventListener('click', () => {
             validatorFormAvatar.resetValidation();
             openPopupEditAvatar.open();
@@ -275,9 +273,10 @@ api.getProfileData('users/me')
     }
 //Окно загрузки в формах
     function renderLoadingForm(isLoading, elem){
+      const loading = elem.querySelector('.popup__submit');
       if (isLoading) {
-        elem.value = "Загрузка...";
+        loading.value = "Загрузка...";
       } else {
-        elem.value = "Применить";
+        loading.value = "Применить";
       }
     }

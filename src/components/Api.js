@@ -1,7 +1,6 @@
 export default class Api {
-    constructor(dataApi, renderLoadingForm) {
+    constructor(dataApi) {
         this._baseUrl = dataApi.baseUrl;
-        this._renderLoadingForm = renderLoadingForm;
     }
 
     getProfileData(entity) {
@@ -65,7 +64,7 @@ export default class Api {
           }) 
     }
 
-    updateUserInfo(userData) {
+    updateUserInfo(data) {
       return fetch(`${this._baseUrl}users/me`, {
           method: 'PATCH',
           headers: {
@@ -73,8 +72,8 @@ export default class Api {
              'Content-Type': 'application/json'
            },
            body: JSON.stringify({
-            name: userData.title,
-            about: userData.subname
+            name: data.name,
+            about: data.about
           })
           })
         .then((res) => {
@@ -142,31 +141,5 @@ export default class Api {
           }) 
         
     }
-
-    getTasks(entity, method, bodyData) {
-        return fetch(`${this._baseUrl}${entity}`, {
-            method: method,
-            headers: {
-               authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-               'Content-Type': 'application/json'
-             },
-             body: JSON.stringify(bodyData)
-            })
-          .then((res) => {
-            if (res.ok) {
-              return res.json()
-            }
-             return Promise.reject(res.status);
-            }) 
-          .catch((err) => {
-              //Вывод ошибки
-              console.log(`Ошибка: ${err}`); 
-              })
-              .finally(() => {
-                this._renderLoadingForm(false)
-              });
-    }
-
-   
-}
+}    
 
