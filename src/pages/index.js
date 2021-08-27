@@ -20,8 +20,8 @@ validatorFormAvatar.enableValidation();
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/'
-}); 
-
+}, renderLoadingForm); 
+renderLoading(true)
 api.getTasks('users/me')
   .then((usersData) => {
     //Подставляем данные о пользователе.
@@ -71,7 +71,7 @@ api.getTasks('cards')
         }
 
         // Popup Add
-        const openPopupWithForm = new PopupWithForm (popupAdd, addCard, cardUploader);
+        const openPopupWithForm = new PopupWithForm (popupAdd, addCard, cardUploader, renderLoadingForm);
         addButton.addEventListener('click', () => {
         validatorFormAdd.resetValidation();
         openPopupWithForm.open();
@@ -105,17 +105,15 @@ function replaceCard(result, cardElement) {
 
 //Лайки
  function addLike(cardId, likes, cardElement) {
-  const api2 = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/'
-  });
+
   if (likeValidate(likes)) {
-    api2.getTasks(cardId, 'DELETE')
+    api.getTasks(`cards/likes/${cardId}`, 'DELETE')
       .then((result) => {
         replaceCard(result, cardElement)
       })
   }
   else {
-  api2.getTasks(cardId, 'PUT') 
+  api.getTasks(`cards/likes/${cardId}`, 'PUT') 
    .then((result) => {
     replaceCard(result, cardElement)
    })
@@ -192,7 +190,7 @@ function profileFormInputs() {
   jobInput.value = profileInputs.subname;
 }
     
-const openPopupUserInfo = new PopupWithForm (popupEdit, handlePopupClick, nameUploader);
+const openPopupUserInfo = new PopupWithForm (popupEdit, handlePopupClick, nameUploader, renderLoadingForm);
 // Popup Edit
 editButton.addEventListener('click', () => {
   profileFormInputs();
@@ -209,7 +207,7 @@ function handlePopupDelete(elem, cardId) {
 openPopupDel.setEventListeners();
 
 //popup Edit Avatar
-const openPopupEditAvatar = new PopupWithForm (popupAvatar, addProfileInform, avatarUploader);
+const openPopupEditAvatar = new PopupWithForm (popupAvatar, addProfileInform, avatarUploader, renderLoadingForm);
 editAvatar.addEventListener('click', () => {
         validatorFormAvatar.resetValidation();
         openPopupEditAvatar.open();
@@ -240,13 +238,25 @@ function avatarUploader(data) {
     });
 
 
-//Окно загрузки
+//Окна загрузки
+//Окно загрузки карточек при открытии странички
     function renderLoading(isLoading) {
      const loading = document.querySelector('.elements__loading');
     
       if (isLoading) {
-        loading.classList.remove('elements__loading_invisible');
-      } else {
         loading.classList.add('elements__loading_invisible');
+      } else {
+        loading.classList.remove('elements__loading_invisible');
       }
+    }
+//Окно загрузки в формах
+    function renderLoadingForm(isLoading){
+      const loading = document.querySelectorAll('.popup__submit');
+    loading.forEach(item => {
+      if (isLoading) {
+        item.value = "Загрузка...";
+      } else {
+        item.value = "Применить";
+      }
+    })
     }

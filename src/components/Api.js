@@ -1,6 +1,7 @@
 export default class Api {
-    constructor(dataApi) {
+    constructor(dataApi, renderLoadingForm) {
         this._baseUrl = dataApi.baseUrl;
+        this._renderLoadingForm = renderLoadingForm;
     }
 
     getTasks(entity, method, bodyData) {
@@ -18,6 +19,13 @@ export default class Api {
             }
              return Promise.reject(res.status);
             }) 
+          .catch((err) => {
+              //Вывод ошибки
+              console.log(`Ошибка: ${err}`); 
+              })
+              .finally(() => {
+                this._renderLoadingForm(false)
+              });
     }
 
    
