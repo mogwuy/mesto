@@ -22,7 +22,7 @@ const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/'
 }); 
 
-api.getInitialCards('users/me')
+api.getTasks('users/me')
   .then((usersData) => {
     //Подставляем данные о пользователе.
     function addProfileInform(data) {
@@ -32,7 +32,7 @@ api.getInitialCards('users/me')
     }
   addProfileInform(usersData)
    
-api.getInitialCards('cards')
+api.getTasks('cards')
   .then((result) => {
     let cards = Array.from(result);
       cards.reverse(); //Разворачиваем массив, что бы новые карточки были вверху
@@ -78,45 +78,79 @@ api.getInitialCards('cards')
         })
         openPopupWithForm.setEventListeners();
 
+
+        //Проверка стоит ли уже лайк
+function likeValidate(likes) {
+  if (likes.find(like => like._id === usersData._id)) {
+  return true
+  } else {return false}
+ return
+}
+
+//Обновление карточки
+function replaceCard(result, cardElement) {
+  const elements = document.querySelector(cardElements);
+        const cardData = { 
+          name: result.name, 
+          link: result.link, 
+          alt: result.name,
+          likes: result.likes,
+          ownerId: result.owner._id,
+          id: result._id,
+          userId: usersData._id
+        }
+        const nodeElement = createCard(cardData)
+        elements.replaceChild(nodeElement, cardElement);
+}
+
+//Лайки
+ function addLike(cardId, likes, cardElement) {
+  const api2 = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/'
+  });
+  if (likeValidate(likes)) {
+    api2.getTasks(cardId, 'DELETE')
+      .then((result) => {
+        replaceCard(result, cardElement)
+      })
+  }
+  else {
+  api2.getTasks(cardId, 'PUT') 
+   .then((result) => {
+    replaceCard(result, cardElement)
+   })
+   .catch((err) => {
+    //Вывод ошибки
+    console.log(`Ошибка: ${err}`); 
+    })
+    .finally(() => {
+      renderLoading(false)
+    });
+  }
+
+ }
+
          
         
 //Отправка отредактированных данных пользователя
   function nameUploader(userData, callBack) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', {
-      method: 'PATCH',
-      headers: {
-        authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: userData.title,
-        about: userData.subname
+   const bodyData = {
+    name: userData.title,
+    about: userData.subname
+  }
+    api.getTasks('users/me', 'PATCH', bodyData)
+      .then (() => {
+       callBack(userData);
       })
-    }) 
-    .then (() => {
-     callBack(userData);
-    })
   }
 
   //Отправка новой карточки
   function cardUploader(data, callBack) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-27/cards', {
-      method: 'POST',
-      headers: {
-        authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link
-      })
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-       return Promise.reject(res.status);
-      }) 
+    const bodyData = {
+      name: data.name,
+      link: data.link
+    }
+    api.getTasks('cards', 'POST', bodyData)
         .then((result) => { 
          const cardData = {
           name: result.name, 
@@ -135,13 +169,7 @@ api.getInitialCards('cards')
 
   //Удаление Карточки с Сервера
   function cardDeleter(cardId) {
-    fetch(`https://mesto.nomoreparties.co/v1/cohort-27/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: {
-        authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-        'Content-Type': 'application/json'
-      }
-    }); 
+    api.getTasks(`cards/${cardId}`, 'DELETE')
   } 
 
    
@@ -190,27 +218,18 @@ editAvatar.addEventListener('click', () => {
 
 
 
-function avatarUploader(data, callBack) {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me/avatar', {
-    method: 'PATCH',
-    headers: {
-      authorization: '822c2109-7d84-466c-adc0-fb811f9f5603',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      avatar: data.link
-    })
-  })
-callBack(data);
-
+function avatarUploader(data) {
+  const bodyData = {
+    avatar: data.avatar
+  }
+  api.getTasks('users/me/avatar', 'PATCH', bodyData)
+  profileAvatarImage.src = data.avatar;
 }
 
 
 
-
-       })
-      
-  })
+ })
+})
 
   .catch((err) => {
     //Вывод ошибки
@@ -220,57 +239,6 @@ callBack(data);
       renderLoading(false)
     });
 
-
-
-
-    const api2 = new Api({
-      baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/'
-    });
-    
-    //Лайки
-     function addLike(cardId, likes, evt) {
-      console.log('Из карточки',likes);
-      api2.getInitialCards(cardId, 'PUT') 
-       .then((result) => {
-         console.log(result);
-       })
-       .catch((err) => {
-        //Вывод ошибки
-        console.log(`Ошибка: ${err}`); 
-        })
-        .finally(() => {
-          renderLoading(false)
-        });
-    
-    
-    
-     // if (likeValidate(likes)) {
-     //   api2.getInitialCards(cardId, 'DELETE')
-     //   .this((result) => {
-     //     likes = result.likes
-     //     const data = Array.from(likes);
-     //     evt.target.querySelector('.element__nlikes').textContent = data.length;
-     //     })
-     // } else {
-     //   api2.getInitialCards(cardId, 'PUT')
-     //   .this((result) => {
-     //     likes = result.likes
-     //     const data = Array.from(likes);
-     //     evt.target.querySelector('.element__nlikes').textContent = data.length;
-     //     })
-     // }
-     // console.log('После карточки',likes)
-     }
- 
- 
-
-//Проверка стоит ли уже лайк
-function likeValidate(likes) {
-  if (likes.find(like => like._id === usersData._id)) {
-  return true
-  } else {return false}
- return
-}
 
 //Окно загрузки
     function renderLoading(isLoading) {
