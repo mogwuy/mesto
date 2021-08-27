@@ -21,7 +21,7 @@ const popupImage = '#popup-image';
 const imageElement = document.querySelector('.popup__image');
 const popupText = document.querySelector('.popup__text');
 const profileAvatar = document.querySelector('.profile__avatar');
-const profileAvatarImage = document.querySelector('.profile__avatar_image');
+const profileAvatarImage = document.querySelector('.profile__avatar-image');
 
 const obj = {
     formSelector: '.popup__container',
