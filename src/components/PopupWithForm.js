@@ -21,7 +21,7 @@ export default class PopupWithForm extends Popup {
             evt.preventDefault(); 
             this._renderLoadingForm(true)
             this._valuesArr = this._getInputValues();
-            this._uploader(this._valuesArr, this._callBack); 
+            this._uploader(this._valuesArr, this._callBack, this._popup); 
             this.close();
           }); 
     }
