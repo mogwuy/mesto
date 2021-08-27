@@ -18,7 +18,7 @@ export default class PopupWithDel extends Popup {
         this._submitDelButton.addEventListener('click',  (evt) => {
           evt.preventDefault(); 
           this._element.remove();
-          this._callBack(this._cardId);
+          this._callBack(this._cardId, this._element);
           super.close() 
         });
     }
