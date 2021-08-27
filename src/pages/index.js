@@ -62,38 +62,22 @@ api.getInitialCards('cards')
           const card = new Card(data.name, data.link, data.alt, data.likes, data.ownerId, data.id, data.userId, '#elementcard', likeValidate, addLike, handleCardClick, handlePopupDelete);
           const cardElem = card.generateCard();
           return cardElem
-        };
+        }
     
         //Вставка карточки в DOM
         function addCard(data) {
           const cardCreated = createCard(data);
           cardList.addItem(cardCreated);
-        };
+        }
 
         // Popup Add
         const openPopupWithForm = new PopupWithForm (popupAdd, addCard, cardUploader);
         addButton.addEventListener('click', () => {
         validatorFormAdd.resetValidation();
         openPopupWithForm.open();
-        });
+        })
         openPopupWithForm.setEventListeners();
-        
-        //Проверка стоит ли уже лайк
-        function likeValidate(likes) {
-          if (likes.find(like => like._id === usersData._id)) {
-          return true
-          } else {return false}
-         return
-        };
-    
-         //Лайки
-         function addLike(cardId, likes, evt) {
-           if (likeValidate(likes)) {
-            api.getLikes(cardId, evt, 'DELETE');
-          } else {
-            api.getLikes(cardId, evt, 'PUT')
-          }
-         };
+
          
         
 //Отправка отредактированных данных пользователя
@@ -236,6 +220,57 @@ callBack(data);
       renderLoading(false)
     });
 
+
+
+
+    const api2 = new Api({
+      baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27/cards/likes/'
+    });
+    
+    //Лайки
+     function addLike(cardId, likes, evt) {
+      console.log('Из карточки',likes);
+      api2.getInitialCards(cardId, 'PUT') 
+       .then((result) => {
+         console.log(result);
+       })
+       .catch((err) => {
+        //Вывод ошибки
+        console.log(`Ошибка: ${err}`); 
+        })
+        .finally(() => {
+          renderLoading(false)
+        });
+    
+    
+    
+     // if (likeValidate(likes)) {
+     //   api2.getInitialCards(cardId, 'DELETE')
+     //   .this((result) => {
+     //     likes = result.likes
+     //     const data = Array.from(likes);
+     //     evt.target.querySelector('.element__nlikes').textContent = data.length;
+     //     })
+     // } else {
+     //   api2.getInitialCards(cardId, 'PUT')
+     //   .this((result) => {
+     //     likes = result.likes
+     //     const data = Array.from(likes);
+     //     evt.target.querySelector('.element__nlikes').textContent = data.length;
+     //     })
+     // }
+     // console.log('После карточки',likes)
+     }
+ 
+ 
+
+//Проверка стоит ли уже лайк
+function likeValidate(likes) {
+  if (likes.find(like => like._id === usersData._id)) {
+  return true
+  } else {return false}
+ return
+}
 
 //Окно загрузки
     function renderLoading(isLoading) {
