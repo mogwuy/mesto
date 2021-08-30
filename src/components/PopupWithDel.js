@@ -17,9 +17,7 @@ export default class PopupWithDel extends Popup {
         //Через сабмит никак не хотело работать, а через клик все замечательно.
         this._submitDelButton.addEventListener('click',  (evt) => {
           evt.preventDefault(); 
-          this._element.remove();
-          this._callBack(this._cardId, this._element);
-          super.close() 
+          this._callBack(this._cardId, this._popup, this._element);
         });
     }
 }
