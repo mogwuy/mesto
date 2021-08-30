@@ -29,8 +29,8 @@
 }
 
 
+  .profile__avatar:hover .profile__avatar-edit {
+    visibility:visible
 
-  .profile__avatar:hover .profile__avatar_edit {
-    visibility:visible;
     }
     
