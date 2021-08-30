@@ -27,13 +27,17 @@ class Card {
   };
 
 // Лайки
-  _setLickeClickHandler(cardId, addLike, likes, cardElement) {
-    this._likeButton.addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-    addLike(cardId, likes, cardElement); //Почему-то через this не попадало в область видимости, пришлось передавать. 
-    //this._addLike(this._cardId, this._likes, evt);
+  _setLickeClickHandler() {
+    this._likeButton.addEventListener('click',  (evt) => {
+    this._addLike(this._cardId, this._likes, this, evt);
   }); 
   };
+
+  updateLikes(result, evt) {
+    this._element.querySelector('.element__nlikes').textContent = result.likes.length;
+    evt.target.classList.toggle('element__like_active');
+    this._likes = result.likes;
+  }
 
 
 //Удаление Карточки
@@ -46,7 +50,7 @@ class Card {
 
 //Слушатели
   _setEventListeners() {
-    this._setLickeClickHandler(this._cardId, this._addLike, this._likes, this._element);
+    this._setLickeClickHandler();
     this._imageElement.addEventListener('click', () => {
     this._handleCardClick(this._name, this._link);
     });
