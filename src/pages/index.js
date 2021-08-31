@@ -93,8 +93,6 @@ api.getProfileData()
                   //Вывод ошибки
                   console.log(`Ошибка: ${err}`); 
                   })
-                  .finally(() => {
-                  })
             } else {
               api.getPutLike(`${cardId}`) 
                 .then((result) => {
@@ -105,17 +103,17 @@ api.getProfileData()
                   //Вывод ошибки
                   console.log(`Ошибка: ${err}`); 
                 })
-                .finally(() => {
-                });
             }
           }   
 
           //Отправка отредактированных данных пользователя
           function nameUploader(userData, element) {
+            renderLoadingForm(true, element);
             api.updateUserInfo(userData)
-              .then (() => {
-                renderLoadingForm(true, element);
-              })
+            .then ((data) => {
+            openPopupUserInfo.close();
+            fillProfileInputs.setUserInfo(data);
+            })
               .catch((err) => {
                 //Вывод ошибки
                 console.log(`Ошибка: ${err}`); 
@@ -123,17 +121,15 @@ api.getProfileData()
                 .finally(() => {
                   //Тут надо вывести загрузку
                    renderLoadingForm(false, element);
-                   openPopupUserInfo.close();
-                   fillProfileInputs.setUserInfo(userData);
                 });
           }
 
           //Отправка новой карточки
           function cardUploader(data, element) {
+            renderLoadingForm(true, element)
             api.updateСardInfo(data)
              .then((result) => { 
-              renderLoadingForm(true, element)
-                let cardData = {
+                const cardData = {
                   name: result.name, 
                   link: result.link, 
                   alt: result.name,
@@ -161,6 +157,8 @@ api.getProfileData()
             api.deleteСard(cardId)
             .then(() => {
               renderLoadingForm(true, popup)
+              element.remove();
+              openPopupDel.close(); 
             })
             .catch((err) => {
               //Вывод ошибки
@@ -168,8 +166,6 @@ api.getProfileData()
               })
               .finally(() => {
                   renderLoadingForm(false, popup)
-                  element.remove();
-                  openPopupDel.close(); 
               });
           } 
 
@@ -181,14 +177,14 @@ api.getProfileData()
           openPopup.setEventListeners();
     
           //Подставляем данные пользователя в форму при открытии
-          const profileInputs = fillProfileInputs.getUserInfo();
           function profileFormInputs() {
+            const profileInputs = fillProfileInputs.getUserInfo();
             nameInput.value = profileInputs.name;
             jobInput.value = profileInputs.about;
           }
 
           // Popup Add
-          const openPopupWithForm = new PopupWithForm (popupAdd, cardUploader, profileInputs);
+          const openPopupWithForm = new PopupWithForm (popupAdd, cardUploader);
           addButton.addEventListener('click', () => {
             validatorFormAdd.resetValidation();
             openPopupWithForm.open();
@@ -196,7 +192,7 @@ api.getProfileData()
           openPopupWithForm.setEventListeners();
     
           // Popup Edit
-          const openPopupUserInfo = new PopupWithForm (popupEdit, nameUploader, profileInputs);
+          const openPopupUserInfo = new PopupWithForm (popupEdit, nameUploader);
           editButton.addEventListener('click', () => {
             profileFormInputs();
             openPopupUserInfo.open();
@@ -212,7 +208,7 @@ api.getProfileData()
           openPopupDel.setEventListeners();
 
           //popup Edit Avatar
-          const openPopupEditAvatar = new PopupWithForm (popupAvatar, avatarUploader, profileInputs);
+          const openPopupEditAvatar = new PopupWithForm (popupAvatar, avatarUploader);
           editAvatar.addEventListener('click', () => {
             validatorFormAvatar.resetValidation();
             openPopupEditAvatar.open();
@@ -220,10 +216,12 @@ api.getProfileData()
           openPopupEditAvatar.setEventListeners();
 
           //Загрузчки аватарки
-          function avatarUploader(data, element) {
-            api.updateAvatar(data)
-            .then(() => {
+          function avatarUploader(userData, element) {
+            api.updateAvatar(userData)
+            .then((data) => {
               renderLoadingForm(true, element)
+              openPopupEditAvatar.close();
+              fillProfileInputs.setUserInfo(data)
             })
             .catch((err) => {
               //Вывод ошибки
@@ -231,8 +229,6 @@ api.getProfileData()
             })
             .finally(() => {
               renderLoadingForm(false, element)
-              openPopupEditAvatar.close();
-              fillProfileInputs.setUserInfo(data)
             });
           }
         })
@@ -259,9 +255,9 @@ api.getProfileData()
      const loading = document.querySelector('.elements__loading');
     
       if (isLoading) {
-        loading.classList.add('elements__loading_invisible');
-      } else {
         loading.classList.remove('elements__loading_invisible');
+      } else {
+        loading.classList.add('elements__loading_invisible');
       }
     }
 //Окно загрузки в формах

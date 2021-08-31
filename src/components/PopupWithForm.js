@@ -1,9 +1,9 @@
 import Popup from './Popup.js'
 export default class PopupWithForm extends Popup {
-    constructor(popupSelector, uploader, data) {
+    constructor(popupSelector, uploader) {
         super(popupSelector);
         this._uploader = uploader;
-        this._formValues = data;
+        this._formValues = {};
         this._formElement = this._popup.querySelector('.popup__container');
         this._inputList = this._formElement.querySelectorAll('.popup__input');
         this._profileAvatarImage = document.querySelector('.profile__avatar-image');
