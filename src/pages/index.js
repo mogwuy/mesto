@@ -139,6 +139,7 @@ api.getProfileData()
                   userId: usersData._id
                 }
                 addCard(cardData);
+                openPopupWithForm.close();
               return cardData;
             })
             .catch((err) => {
@@ -146,17 +147,15 @@ api.getProfileData()
               console.log(`Ошибка: ${err}`); 
               })
               .finally(() => {
-                //Тут надо вывести загрузку
                 renderLoadingForm(false, element);
-                openPopupWithForm.close();
               });
           };
 
           //Удаление Карточки с Сервера
           function cardDeleter(cardId, popup, element) {
+            renderLoadingForm(true, popup)
             api.deleteСard(cardId)
             .then(() => {
-              renderLoadingForm(true, popup)
               element.remove();
               openPopupDel.close(); 
             })
@@ -217,9 +216,9 @@ api.getProfileData()
 
           //Загрузчки аватарки
           function avatarUploader(userData, element) {
+            renderLoadingForm(true, element)
             api.updateAvatar(userData)
             .then((data) => {
-              renderLoadingForm(true, element)
               openPopupEditAvatar.close();
               fillProfileInputs.setUserInfo(data)
             })
